@@ -58,7 +58,6 @@ public class NativeModuleComponentFactory implements ModuleComponentsFactory {
 				return resolver;
 			}
 		};
-		TwoLevelWeaveResourceResolver tlr = new TwoLevelWeaveResourceResolver(NativeSystemModuleComponents.systemResourceResolver, resolverFactory);
 	    return ModuleComponents.apply(new TwoLevelWeaveResourceResolver(NativeSystemModuleComponents.systemResourceResolver, resolverFactory), parser, compiler);
 	}
 

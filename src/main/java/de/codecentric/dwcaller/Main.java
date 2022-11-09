@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.mule.weave.v2.io.service.CustomWorkingDirectoryService;
 import org.mule.weave.v2.io.service.WorkingDirectoryService;
@@ -36,7 +37,11 @@ import org.mule.weave.v2.runtime.ObjectDataWeaveValue;
 import org.mule.weave.v2.runtime.ParserConfiguration;
 import org.mule.weave.v2.runtime.ScriptingBindings;
 import org.mule.weave.v2.runtime.SimpleDataWeaveValue;
+import org.mule.weave.v2.runtime.SimpleModuleComponentFactory;
+import org.mule.weave.v2.sdk.WeaveResourceResolver;
 
+import de.codecentric.dwcaller.test.Test;
+import de.codecentric.dwcaller.test.TextReporter;
 import de.codecentric.dwcaller.utils.DataWeaveUtils;
 import de.codecentric.dwcaller.utils.NativeModuleComponentFactory;
 import de.codecentric.dwcaller.utils.PathBasedResourceResolver;
@@ -56,14 +61,15 @@ public class Main {
 		ScriptingBindings bindings = new ScriptingBindings();
 		bindings.addBinding("payload", "{\"foo\": 42}", "application/json");
 		
-		ModuleComponentsFactory moduleComponentFactory = new NativeModuleComponentFactory();
-		DataWeaveScriptingEngine weaveScriptingEngine = new DataWeaveScriptingEngine(moduleComponentFactory, ParserConfiguration.apply(new MutableList<>(), new MutableList<>()));
+		ModuleComponentsFactory moduleComponentFactory = SimpleModuleComponentFactory.apply(); // apply with WeaveResourceResolver possible, too
+		DataWeaveScriptingEngine scriptingEngine = new DataWeaveScriptingEngine(moduleComponentFactory, ParserConfiguration.apply(new MutableList<>(), new MutableList<>()));
 		//DataWeaveScript script = weaveScriptingEngine.compile("[ 41, '42', { a: 43 }]");
 		
-		//weaveScriptingEngine.compile(script, nameIdentifier, inputs.entries().map(wi => new InputType(wi, None)).toArray, defaultOutputMimeType)
+		//scriptingEngine.compile(script, nameIdentifier, inputs.entries().map(wi => new InputType(wi, None)).toArray, defaultOutputMimeType)
 		
 		InputType[] inputs = bindingsToInputs(bindings);
-		DataWeaveScript script = weaveScriptingEngine.compile("payload", NameIdentifier.apply("script.dwl", Option.empty()), inputs, "application/json");
+		//DataWeaveScript script = scriptingEngine.compile("payload", NameIdentifier.apply("script.dwl", Option.empty()), inputs, "application/json");
+		DataWeaveScript script = scriptingEngine.compile(new File("src/main/resources/test.dwl"), inputs);
 		
 		ServiceManager serviceManager = createServiceManager();
 		// use script.write() instead? With some target? see NativeRuntime.scala, line 92:
@@ -75,10 +81,12 @@ public class Main {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		Option<Object> out = Option.apply(bos);
 		// write(ScriptingBindings bindings, ServiceManager serviceManager, String outputMimeType, Option<Object> target) {
-		DataWeaveResult result = script.write(bindings, serviceManager, "application/json", out);
-		System.out.println("out: " + new String(bos.toByteArray()));
-		
-		System.out.println("done");
+		DataWeaveResult result = script.write(bindings, serviceManager, "application/java", out);
+		Object content = result.getContent();
+		@SuppressWarnings("unchecked")
+		Test test = new Test((Map<String, Object>)content);
+		System.out.println(TextReporter.test2report(test));
+//		System.out.println("out: " + new String(bos.toByteArray()));
 	}
 	
 	private static InputType[] bindingsToInputs(ScriptingBindings bindings) {
@@ -91,7 +99,7 @@ public class Main {
 		return inputs.toArray(new InputType[inputs.size()]);
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static ServiceManager createServiceManager() {
 		// ResourceManager resourceManager = new ResourceManager();
 		// WeaveServicesProvider serviceProvider = new SPIWeaveServicesProvider();
