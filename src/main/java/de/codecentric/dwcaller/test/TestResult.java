@@ -5,7 +5,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class Test {
+/**
+ * Tree with unit test results.
+ */
+public class TestResult {
 	private String name;
 	private int time;
 	private String status;
@@ -14,19 +17,19 @@ public class Test {
 	private String sourceIdentifier;
 	private Location start;
 	private Location end;
-	private Collection<Test> tests;
+	private Collection<TestResult> tests;
 	
-	public Test() {
+	public TestResult() {
 		tests = new ArrayList<>();
 	}
 	
-	public Test(String name) {
+	public TestResult(String name) {
 		this();
 		this.name = name;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Test(Map<String, Object> data) {
+	public TestResult(Map<String, Object> data) {
 		this();
 		name = (String) data.get("name");
 		time = (int) data.get("time");
@@ -42,7 +45,7 @@ public class Test {
 		List<Map<String, Object>> testList = (List<Map<String, Object>>) data.get("tests");
 		if (testList != null) {
 			for (Map<String, Object> testObject : testList) {
-				tests.add(new Test(testObject));
+				tests.add(new TestResult(testObject));
 			}
 		}
 	}
@@ -79,11 +82,11 @@ public class Test {
 		return end;
 	}
 
-	public Collection<Test> getTests() {
+	public Collection<TestResult> getTests() {
 		return tests;
 	}
 	
-	public void addTest(Test test) {
+	public void addTest(TestResult test) {
 		tests.add(test);
 	}
 	

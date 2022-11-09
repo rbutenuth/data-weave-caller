@@ -2,6 +2,9 @@ package de.codecentric.dwcaller.test;
 
 import java.util.Map;
 
+/**
+ * Location within a script.
+ */
 public class Location {
 	private int index;
 	private int line;

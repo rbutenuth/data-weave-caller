@@ -3,13 +3,13 @@ package de.codecentric.dwcaller.test;
 public class TextReporter {
 	private static final String NL = System.lineSeparator();
 	
-	public static String test2report(Test test) {
+	public static String test2report(TestResult test) {
 		StringBuilder sb = new StringBuilder();
 		reportTest(sb, test, 0);
 		return sb.toString();
 	}
 
-	private static void reportTest(StringBuilder sb, Test test, int indent) {
+	private static void reportTest(StringBuilder sb, TestResult test, int indent) {
 		indent(sb, indent);
 		sb.append(test.getName());
 		if (test.isLeave()) {
@@ -24,7 +24,7 @@ public class TextReporter {
 			}
 		} else {
 			sb.append(NL);
-			for (Test t : test.getTests()) {
+			for (TestResult t : test.getTests()) {
 				reportTest(sb, t, indent + 2);
 			}
 		}
