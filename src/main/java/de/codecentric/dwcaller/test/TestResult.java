@@ -6,41 +6,41 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Tree with unit test results.
+ * Node in a tree with unit test results.
  */
 public class TestResult {
 	private String name;
 	private int time;
-	private String status;
+	private TestStatus status;
 	private String errorMessage;
 	private String text;
 	private String sourceIdentifier;
 	private Location start;
 	private Location end;
 	private Collection<TestResult> tests;
-	
+
 	public TestResult() {
 		tests = new ArrayList<>();
 	}
-	
+
 	public TestResult(String name) {
 		this();
 		this.name = name;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public TestResult(Map<String, Object> data) {
 		this();
 		name = (String) data.get("name");
 		time = (int) data.get("time");
-		status = (String)data.get("status");
-		errorMessage = (String)data.get("errorMessage");
-		text = (String)data.get("text");
+		status = TestStatus.valueOf((String) data.get("status"));
+		errorMessage = (String) data.get("errorMessage");
+		text = (String) data.get("text");
 		Map<String, Object> locationObject = (Map<String, Object>) data.get("location");
 		if (locationObject != null) {
-			start = new Location((Map<String, Object>)locationObject.get("start"));
-			end = new Location((Map<String, Object>)locationObject.get("end"));
-			sourceIdentifier = (String)locationObject.get("sourceIdentifier");
+			start = new Location((Map<String, Object>) locationObject.get("start"));
+			end = new Location((Map<String, Object>) locationObject.get("end"));
+			sourceIdentifier = (String) locationObject.get("sourceIdentifier");
 		}
 		List<Map<String, Object>> testList = (List<Map<String, Object>>) data.get("tests");
 		if (testList != null) {
@@ -58,7 +58,7 @@ public class TestResult {
 		return time;
 	}
 
-	public String getStatus() {
+	public TestStatus getStatus() {
 		return status;
 	}
 
@@ -85,12 +85,24 @@ public class TestResult {
 	public Collection<TestResult> getTests() {
 		return tests;
 	}
-	
+
 	public void addTest(TestResult test) {
 		tests.add(test);
 	}
-	
+
 	public boolean isLeave() {
 		return tests.isEmpty();
+	}
+
+	public boolean isAllSuccess() {
+		if (isLeave()) {
+			return status.isSuccess();
+		} else {
+			boolean success = true;
+			for (TestResult t : tests) {
+				success &= t.isAllSuccess();
+			}
+			return success;
+		}
 	}
 }

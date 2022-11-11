@@ -1,15 +1,27 @@
 package de.codecentric.dwcaller.test;
 
+/**
+ * Simple text reporter.
+ */
 public class TextReporter {
 	private static final String NL = System.lineSeparator();
 	
+	/**
+	 * Make a String representation from a tree of tests.
+	 * @param test Root
+	 * @return Several lines with results.
+	 */
 	public static String test2report(TestResult test) {
 		StringBuilder sb = new StringBuilder();
 		Statistic stat = new Statistic();
 		reportTest(sb, stat, test, 0);
-		sb.append("Total:  ").append(stat.total).append(NL);
-		sb.append("OK:     ").append(stat.ok).append(NL);
-		sb.append("Not OK: ").append(stat.total - stat.ok).append(NL);
+		sb.append("Total: ").append(stat.getTotalNumberOfTests()).append(NL);
+		for (TestStatus s : TestStatus.values()) {
+			sb.append(String.format("%-7s", s.toString() + ":")).append(stat.getNumberOf(s)).append(NL);
+		}
+		if (!test.isAllSuccess()) {
+			sb.append(">>>>>>>>>>> There are ERRORS/FAILURES!").append(NL);
+		}
 		return sb.toString();
 	}
 
@@ -17,18 +29,16 @@ public class TextReporter {
 		indent(sb, indent);
 		sb.append(test.getName());
 		if (test.isLeave()) {
-			sb.append(": ").append(test.getStatus()).append(NL);
-			indent(sb, indent + 2);
-			sb.append("Time: " ).append(test.getTime()).append("ms").append(NL);
-			if ("OK".equals(test.getStatus())) {
-				stat.ok++;
+			stat.add(test.getStatus());
+			sb.append(": ").append(test.getStatus().toString());
+			sb.append(", Time: " ).append(test.getTime()).append("ms").append(NL);
+			if (test.getStatus().isSuccess()) {
 			} else {
 				indent(sb, indent + 2);
 				sb.append("Error message: ").append(test.getErrorMessage()).append(NL);
 				indent(sb, indent + 2);
 				sb.append("Location: ").append(test.getSourceIdentifier()).append(", line ").append(test.getStart().getLine()).append(NL);
 			}
-			stat.total++;
 		} else {
 			sb.append(NL);
 			for (TestResult t : test.getTests()) {
@@ -44,7 +54,22 @@ public class TextReporter {
 	}
 	
 	private static class Statistic {
-		private int ok;
-		private int total;
+		private int[] count = new int[TestStatus.values().length];
+		
+		public void add(TestStatus testStatus) {
+			count[testStatus.ordinal()]++;
+		}
+		
+		public int getNumberOf(TestStatus testStatus) {
+			return count[testStatus.ordinal()];
+		}
+		
+		public int getTotalNumberOfTests() {
+			int sum = 0;
+			for (TestStatus s : TestStatus.values()) {
+				sum += count[s.ordinal()];
+			}
+			return sum;
+		}
 	}
 }

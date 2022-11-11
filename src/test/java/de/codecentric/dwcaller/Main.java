@@ -30,7 +30,7 @@ public class Main {
 		WeaveRunner weaveRunner = new WeaveRunnerBuilder() //
 				.withIgnorePattern(Pattern.compile("data-weave-testing-framework.*", Pattern.DOTALL)) //
 				.build();
-		DataWeaveScript script = weaveRunner.compile(new File("src/main/resources/test.dwl"), bindings);
+		DataWeaveScript script = weaveRunner.compile(new File("src/test/resources/test.dwl"), bindings);
 		DataWeaveResult result = weaveRunner.runScript(script, bindings, "application/java");
 		Object content = result.getContent();
 		@SuppressWarnings("unchecked")

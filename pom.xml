@@ -52,18 +52,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.mule.weave</groupId>
-			<artifactId>wlang</artifactId>
-			<version>2.4.0-20220824</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.weave</groupId>
-			<artifactId>file-module</artifactId>
-			<version>0.6.4</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.weave</groupId>
 			<artifactId>core-modules</artifactId>
 			<version>2.4.0-20220824</version>
 		</dependency>
@@ -71,17 +59,6 @@
 			<groupId>org.mule.weave</groupId>
 			<artifactId>java-module</artifactId>
 			<version>2.4.0-20220824</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.weave</groupId>
-			<artifactId>assertions</artifactId>
-			<version>1.1.3</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala3-library_3</artifactId>
-			<version>3.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mule.weave</groupId>
