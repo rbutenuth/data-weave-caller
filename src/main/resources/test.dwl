@@ -14,6 +14,9 @@ import * from MyModule
         },
         "6*7 should be 42" in do {
             (6 * 7) must equalTo(41)
+        },
+        "log-test" in do {
+            "I am a log message" must equalTo("I am a log message")
         }
     ]
 ]

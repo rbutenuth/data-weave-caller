@@ -1,9 +1,8 @@
 package de.codecentric.dwcaller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.mule.weave.v2.runtime.ArrayDataWeaveValue;
 import org.mule.weave.v2.runtime.DataWeaveNameValue;
@@ -18,25 +17,26 @@ import de.codecentric.dwcaller.test.TestResult;
 import de.codecentric.dwcaller.test.TextReporter;
 import de.codecentric.dwcaller.utils.WeaveRunner;
 import de.codecentric.dwcaller.utils.WeaveRunnerBuilder;
-import scala.Option;
 
+/**
+ * Class to test some stuff
+ */
 public class Main {
 	
 	public static void main(String[] args) {
 		ScriptingBindings bindings = new ScriptingBindings();
 		bindings.addBinding("payload", "{\"foo\": 42}", "application/json");
 
-		WeaveRunner weaveRunner = new WeaveRunnerBuilder().build();
+		WeaveRunner weaveRunner = new WeaveRunnerBuilder() //
+				.withIgnorePattern(Pattern.compile("data-weave-testing-framework.*", Pattern.DOTALL)) //
+				.build();
 		DataWeaveScript script = weaveRunner.compile(new File("src/main/resources/test.dwl"), bindings);
-		
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		Option<Object> out = Option.apply(bos);
-		DataWeaveResult result = script.write(bindings, weaveRunner.getServiceManager(), "application/java", out);
+		DataWeaveResult result = weaveRunner.runScript(script, bindings, "application/java");
 		Object content = result.getContent();
 		@SuppressWarnings("unchecked")
 		TestResult test = new TestResult((Map<String, Object>)content);
 		System.out.print(TextReporter.test2report(test));
-		System.out.println("out: " + new String(bos.toByteArray(), StandardCharsets.UTF_8));
+		//System.out.println("out: " + new String(bos.toByteArray(), StandardCharsets.UTF_8));
 	}
 	
 
