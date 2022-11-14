@@ -22,11 +22,23 @@ import de.codecentric.dwcaller.utils.WeaveRunnerBuilder;
 public class TestRunner {
 
 	public static void main(String[] args) throws IOException {
+		System.exit(run(args) ? 0 : 1);
+	}
+	
+	/**
+	 * Run all tests (no args) or specific tests.
+	 * @param args Directories with tests and/or tests to run.
+	 * @return All tests successful (or ignored)?
+	 * @throws IOException
+	 */
+	public static boolean run(String[] args) throws IOException {
 		File srcMain = new File("src/main/resources");
 		File srcTest = new File("src/test/resources");
 		File target = new File("target/classes");
 		SynchronizeUtil syncher = new SynchronizeUtil();
 		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.class"));
+		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.xml"));
+		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.dwl"));
 		syncher.syncFileOrDirectory(srcMain, target);
 		syncher.syncFileOrDirectory(srcTest, target);
 		syncher.deleteUnexpectedNodes(target);
@@ -34,7 +46,7 @@ public class TestRunner {
 		TestRunner runner = new TestRunner(args);
 		TestResult result = runner.runTests();
 		System.out.print(TextReporter.test2report(result));
-		System.exit(result.isAllSuccess() ? 0 : 1);
+		return result.isAllSuccess();
 	}
 
 	private String[] args;
