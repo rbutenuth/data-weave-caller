@@ -12,7 +12,6 @@ import org.mule.weave.v2.sdk.SPIBasedModuleLoaderProvider;
 import org.mule.weave.v2.sdk.TwoLevelWeaveResourceResolver;
 import org.mule.weave.v2.sdk.WeaveResourceResolver;
 
-import de.codecentric.dwcaller.Main;
 import scala.Function0;
 import scala.Function1;
 import scala.Option;
@@ -27,7 +26,7 @@ public class NativeModuleComponentFactory implements ModuleComponentsFactory {
 
 			@Override
 			public ClassLoader apply() {
-				return Main.class.getClassLoader();
+				return NativeModuleComponentFactory.class.getClassLoader();
 			}
 		});
 		

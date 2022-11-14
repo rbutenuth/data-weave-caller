@@ -6,8 +6,8 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import org.mule.weave.v2.io.service.CustomWorkingDirectoryService;
@@ -34,39 +34,64 @@ import scala.collection.immutable.HashMap;
 import scala.collection.mutable.MutableList;
 
 /**
- * Currently the builder is complete overkill, but we may add some
- * configurability (patch etc.) later.
+ * Builder for a {@link WeaveRunner}.
  */
 public class WeaveRunnerBuilder {
 	private DataWeaveScriptingEngine scriptingEngine;
 	private ServiceManager serviceManager;
 	private List<Pattern> ignorePatterns;
+	private List<File> pathElements;
+	private boolean addClassPath;
 
 	public WeaveRunnerBuilder() {
 		ignorePatterns = new ArrayList<>();
+		pathElements = new ArrayList<>();
 	}
 
 	public WeaveRunnerBuilder withIgnorePattern(Pattern pattern) {
 		ignorePatterns.add(pattern);
 		return this;
 	}
+	
+	public WeaveRunnerBuilder withPathDir(File dir) {
+		pathElements.add(dir);
+		return this;
+	}
 
+
+	public WeaveRunnerBuilder withClassPath() {
+		addClassPath = true;
+		return this;
+	}
+	
 	public WeaveRunner build() {
-		ModuleComponentsFactory moduleComponentFactory = SimpleModuleComponentFactory.apply(); // apply with
-																								// WeaveResourceResolver
-																								// possible, too
+		if (addClassPath) {
+			addJarsToClassPath();
+		}
+		PathBasedResourceResolver resourceResolver = new PathBasedResourceResolver(pathElements);
+		ModuleComponentsFactory moduleComponentFactory = SimpleModuleComponentFactory.apply(resourceResolver);
 		scriptingEngine = new DataWeaveScriptingEngine(moduleComponentFactory,
 				ParserConfiguration.apply(new MutableList<>(), new MutableList<>()));
 		SimpleLoggingService logger = new SimpleLoggingService();
 		for (Pattern p : ignorePatterns) {
 			logger.addIgnorePattern(p);
 		}
-		serviceManager = createServiceManager(logger);
+		serviceManager = createServiceManager(logger, resourceResolver);
 		return new WeaveRunnerImplementation(scriptingEngine, serviceManager);
 	}
 
+	private void addJarsToClassPath() {
+		String classPath = System.getProperty("java.class.path");
+		String pathSep = System.getProperty("path.separator");
+		StringTokenizer tok = new StringTokenizer(classPath, pathSep);
+		while (tok.hasMoreTokens()) {
+			String s = tok.nextToken();
+			pathElements.add(new File(s));
+		}
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private ServiceManager createServiceManager(LoggingService logger) {
+	private ServiceManager createServiceManager(LoggingService logger, PathBasedResourceResolver pathBasedResourceResolver) {
 		Function0<File> directoryFunction = new Function0<File>() {
 			@Override
 			public File apply() {
@@ -81,7 +106,6 @@ public class WeaveRunnerBuilder {
 		HashMap<Class<?>, ?> customServices = new HashMap<>();
 		MutableList<ReadFunctionProtocolHandler> handlers = new MutableList<>();
 		// TODO: Missing in Sequence: UrlProtocolHandler
-		PathBasedResourceResolver pathBasedResourceResolver = new PathBasedResourceResolver(Collections.emptyList());
 		handlers.appendElem(new WeavePathProtocolHandler(pathBasedResourceResolver));
 		ProtocolUrlSourceProviderResolverService service = new ProtocolUrlSourceProviderResolverService(handlers);
 		customServices.$plus(new Tuple2(UrlSourceProviderResolverService.class, service));

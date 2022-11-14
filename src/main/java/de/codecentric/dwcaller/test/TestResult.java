@@ -94,6 +94,9 @@ public class TestResult {
 		return tests.isEmpty();
 	}
 
+	/**
+	 * @return Are all tests in the tree starting from this node successful? (OK or SKIP)
+	 */
 	public boolean isAllSuccess() {
 		if (isLeave()) {
 			return status.isSuccess();
