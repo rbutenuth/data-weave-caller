@@ -22,7 +22,9 @@ import de.codecentric.dwcaller.utils.WeaveRunnerBuilder;
 public class TestRunner {
 
 	public static void main(String[] args) throws IOException {
-		System.exit(run(args) ? 0 : 1);
+		TestResult result = run(args);
+		System.out.print(TextReporter.test2report(result));
+		System.exit(result.isAllSuccess() ? 0 : 1);
 	}
 	
 	/**
@@ -31,7 +33,7 @@ public class TestRunner {
 	 * @return All tests successful (or ignored)?
 	 * @throws IOException
 	 */
-	public static boolean run(String[] args) throws IOException {
+	public static TestResult run(String[] args) throws IOException {
 		File srcMain = new File("src/main/resources");
 		File srcTest = new File("src/test/resources");
 		File target = new File("target/classes");
@@ -45,8 +47,7 @@ public class TestRunner {
 
 		TestRunner runner = new TestRunner(args);
 		TestResult result = runner.runTests();
-		System.out.print(TextReporter.test2report(result));
-		return result.isAllSuccess();
+		return result;
 	}
 
 	private String[] args;

@@ -17,7 +17,7 @@ public class TestResult {
 	private String sourceIdentifier;
 	private Location start;
 	private Location end;
-	private Collection<TestResult> tests;
+	private List<TestResult> tests;
 
 	public TestResult() {
 		tests = new ArrayList<>();
@@ -82,7 +82,7 @@ public class TestResult {
 		return end;
 	}
 
-	public Collection<TestResult> getTests() {
+	public List<TestResult> getTests() {
 		return tests;
 	}
 
