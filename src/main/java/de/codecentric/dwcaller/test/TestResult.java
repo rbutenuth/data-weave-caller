@@ -1,7 +1,6 @@
 package de.codecentric.dwcaller.test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +20,7 @@ public class TestResult {
 
 	public TestResult() {
 		tests = new ArrayList<>();
+		name = "";
 	}
 
 	public TestResult(String name) {
@@ -28,6 +28,10 @@ public class TestResult {
 		this.name = name;
 	}
 
+	/**
+	 * Create an instance based on the code in data-weave-test-framework, file Tests.dwl.
+	 * @param data JSON like data structure with test information.
+	 */
 	@SuppressWarnings("unchecked")
 	public TestResult(Map<String, Object> data) {
 		this();
@@ -50,46 +54,79 @@ public class TestResult {
 		}
 	}
 
+	/**
+	 * @return Name of test
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @return Test execution time in milliseconds.
+	 */
 	public int getTime() {
 		return time;
 	}
 
+	/**
+	 * @return Test status.
+	 */
 	public TestStatus getStatus() {
 		return status;
 	}
 
+	/**
+	 * @return Error message or null.
+	 */
 	public String getErrorMessage() {
 		return errorMessage;
 	}
 
+	/**
+	 * @return Text describing test, may be null.
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * @return Path info of test, parts separated by ::.
+	 */
 	public String getSourceIdentifier() {
 		return sourceIdentifier;
 	}
 
+	/**
+	 * @return Start location of test in file.
+	 */
 	public Location getStart() {
 		return start;
 	}
 
+	/**
+	 * @return End location of test in file.
+	 */
 	public Location getEnd() {
 		return end;
 	}
 
+	/**
+	 * @return Children, empty for leave node (but never null).
+	 */
 	public List<TestResult> getTests() {
 		return tests;
 	}
 
+	/**
+	 * @param test Child to add.
+	 */
 	public void addTest(TestResult test) {
 		tests.add(test);
 	}
 
+	/**
+	 * @return No children?
+	 */
 	public boolean isLeave() {
 		return tests.isEmpty();
 	}
