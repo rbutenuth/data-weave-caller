@@ -20,12 +20,12 @@ import de.codecentric.dwcaller.TestRunner;
  * to execute DataWeave tests. Your method must be annotated with {@link TestFactory} 
  * 
  * Example:
- * {@code
+ * <pre>
  * 	@TestFactory
  *  Collection<DynamicNode> dataWeaveTests() throws Exception {
  *    return all();
  *  }
- *  }
+ *  </pre>
  */
 public abstract class DataWeaveTests {
 
