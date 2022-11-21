@@ -35,8 +35,8 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:https://github.com/rbutenuth/data-weave-caller.git</connection>
-		<developerConnection>scm:git:https://github.com/rbutenuth/data-weave-caller.git</developerConnection>
+		<connection>scm:git:git@github.com:rbutenuth/data-weave-caller.git</connection>
+		<developerConnection>scm:git:git@github.com:rbutenuth/data-weave-caller.git</developerConnection>
 		<url>https://github.com/rbutenuth/data-weave-caller</url>
 		<tag>data-weave-caller-1.0.0</tag>
 	</scm>
