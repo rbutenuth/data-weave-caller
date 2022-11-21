@@ -3,7 +3,7 @@
 
 	<groupId>de.codecentric.mule.modules</groupId>
 	<artifactId>data-weave-caller</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<packaging>jar</packaging>
 
 	<name>data-weave-caller</name>
@@ -36,7 +36,7 @@
 		<connection>scm:git:git@github.com:rbutenuth/data-weave-caller.git</connection>
 		<developerConnection>scm:git:git@github.com:rbutenuth/data-weave-caller.git</developerConnection>
 		<url>https://github.com/rbutenuth/data-weave-caller</url>
-		<tag>data-weave-caller-1.0.0</tag>
+		<tag>data-weave-caller-1.0.2</tag>
 	</scm>
 	
 	<distributionManagement>
