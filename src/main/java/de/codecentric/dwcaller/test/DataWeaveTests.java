@@ -1,6 +1,6 @@
 package de.codecentric.dwcaller.test;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public abstract class DataWeaveTests {
 	 * @return All tests found in sub directories and given by name.
 	 * @throws IOException From DataWeave
 	 */
-	protected Collection<DynamicNode> some(String[] names) throws IOException {
+	protected Collection<DynamicNode> some(String... names) throws IOException {
 		TestResult result = simplifyTree(TestRunner.run(names));
 		List<DynamicNode> tests = new ArrayList<>();
 		addTests(tests, result);
@@ -75,7 +75,8 @@ public abstract class DataWeaveTests {
 					@Override
 					public void execute() throws Throwable {
 						// already executed
-					}}));
+					}
+				}));
 				break;
 			case ERROR:
 			case FAIL:
@@ -84,7 +85,8 @@ public abstract class DataWeaveTests {
 					public void execute() throws Throwable {
 						Throwable e = new Throwable(result.getErrorMessage());
 						StackTraceElement[] trace = new StackTraceElement[1];
-						trace[0] = new StackTraceElement(className(result.getSourceIdentifier()), result.getName(), result.getSourceIdentifier(), result.getStart().getLine());
+						trace[0] = new StackTraceElement(className(result.getSourceIdentifier()), result.getName(), result.getSourceIdentifier(),
+								result.getStart().getLine());
 						e.setStackTrace(trace);
 						throw e;
 					}
@@ -92,7 +94,8 @@ public abstract class DataWeaveTests {
 					private String className(String name) {
 						int start = name.lastIndexOf("::");
 						return start == -1 ? name : name.substring(start + 2);
-					}}));
+					}
+				}));
 				break;
 			default:
 				fail("unknown status: " + result.getStatus());
@@ -100,7 +103,7 @@ public abstract class DataWeaveTests {
 			}
 		} else {
 			List<DynamicNode> nodes = new ArrayList<>();
-			for (TestResult test: result.getTests()) {
+			for (TestResult test : result.getTests()) {
 				addTests(nodes, test);
 			}
 			tests.add(DynamicContainer.dynamicContainer(result.getName(), nodes));
