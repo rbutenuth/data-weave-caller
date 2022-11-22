@@ -5,7 +5,7 @@ package de.codecentric.dwcaller.test;
  */
 public class TextReporter {
 	private static final String NL = System.lineSeparator();
-	
+
 	/**
 	 * Make a String representation from a tree of tests.
 	 * @param test Root
@@ -31,9 +31,8 @@ public class TextReporter {
 		if (test.isLeave()) {
 			stat.add(test.getStatus());
 			sb.append(": ").append(test.getStatus().toString());
-			sb.append(", Time: " ).append(test.getTime()).append("ms").append(NL);
-			if (test.getStatus().isSuccess()) {
-			} else {
+			sb.append(", Time: ").append(test.getTime()).append("ms").append(NL);
+			if (!test.getStatus().isSuccess()) {
 				indent(sb, indent + 2);
 				sb.append("Error message: ").append(test.getErrorMessage()).append(NL);
 				indent(sb, indent + 2);
@@ -46,24 +45,24 @@ public class TextReporter {
 			}
 		}
 	}
-	
+
 	private static void indent(StringBuilder sb, int indent) {
 		for (int i = 0; i < indent; i++) {
 			sb.append(' ');
 		}
 	}
-	
+
 	private static class Statistic {
 		private int[] count = new int[TestStatus.values().length];
-		
+
 		public void add(TestStatus testStatus) {
 			count[testStatus.ordinal()]++;
 		}
-		
+
 		public int getNumberOf(TestStatus testStatus) {
 			return count[testStatus.ordinal()];
 		}
-		
+
 		public int getTotalNumberOfTests() {
 			int sum = 0;
 			for (TestStatus s : TestStatus.values()) {

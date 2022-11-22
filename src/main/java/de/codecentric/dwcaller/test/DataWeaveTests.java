@@ -73,7 +73,7 @@ public abstract class DataWeaveTests {
 				}
 				tests.add(DynamicTest.dynamicTest(name, new Executable() {
 					@Override
-					public void execute() throws Throwable {
+					public void execute() {
 						// already executed
 					}
 				}));
