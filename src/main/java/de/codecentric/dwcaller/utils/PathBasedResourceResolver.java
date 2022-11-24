@@ -1,5 +1,9 @@
 package de.codecentric.dwcaller.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -19,11 +23,6 @@ import scala.io.BufferedSource;
 import scala.io.Codec;
 import scala.io.Source;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 public class PathBasedResourceResolver implements WeaveResourceResolver {
 	private List<ContentResolver> paths = new ArrayList<>();
 
@@ -31,7 +30,7 @@ public class PathBasedResourceResolver implements WeaveResourceResolver {
 		if (libDir.exists()) {
 			File[] files = libDir.listFiles();
 			if (files != null) {
-				for (File f: files) {
+				for (File f : files) {
 					paths.add(createContentResolver(f));
 				}
 			}
@@ -39,12 +38,12 @@ public class PathBasedResourceResolver implements WeaveResourceResolver {
 	}
 
 	public PathBasedResourceResolver(Collection<File> files) {
-		for (File f: files) {
+		for (File f : files) {
 			paths.add(createContentResolver(f));
 		}
 	}
 
-	public void addContent(ContentResolver cr){
+	public void addContent(ContentResolver cr) {
 		paths.add(cr);
 	}
 
@@ -59,7 +58,6 @@ public class PathBasedResourceResolver implements WeaveResourceResolver {
 		}
 		return Option.empty();
 	}
-
 
 	public String toString(InputStream is) {
 		try (BufferedSource s = Source.fromInputStream(is, new Codec(StandardCharsets.UTF_8))) {
@@ -77,17 +75,6 @@ public class PathBasedResourceResolver implements WeaveResourceResolver {
 		}
 		return Option.empty();
 	}
-
-	
-//	  override def resolveAll(name: NameIdentifier): Seq[WeaveResource] = {
-//	    paths
-//	      .flatMap(_.resolve(name))
-//	      .map((content) => {
-//	        val path = NameIdentifierHelper.toWeaveFilePath(name, "/")
-//	        WeaveResource(path, toString(content))
-//	      })
-//	  }
-//	}
 
 	interface ContentResolver {
 		public Option<InputStream> resolve(NameIdentifier path);
