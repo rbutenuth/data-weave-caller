@@ -22,11 +22,14 @@ import de.codecentric.dwcaller.utils.WeaveRunnerBuilder;
 public class TestRunner {
 
 	public static void main(String[] args) throws IOException {
+		long start = System.currentTimeMillis();
 		TestResult result = run(args);
 		System.out.print(TextReporter.test2report(result));
+		long finish = System.currentTimeMillis();
+		System.out.println("Time needed: " + (finish - start) + "ms");
 		System.exit(result.isAllSuccess() ? 0 : 1);
 	}
-	
+
 	/**
 	 * Run all tests (no args) or specific tests.
 	 * @param args Directories with tests and/or tests to run.
@@ -67,7 +70,7 @@ public class TestRunner {
 			result = runTest(new File(args[0]), weaveRunner);
 		} else { // more than one test (suite)
 			result = new TestResult("all tests");
-			for (String arg: args) {
+			for (String arg : args) {
 				TestResult oneResult = runTest(new File(arg), weaveRunner);
 				if (isAddableResult(oneResult)) {
 					result.addTest(oneResult);
@@ -80,7 +83,7 @@ public class TestRunner {
 	public TestRunner(String[] args) {
 		this.args = args;
 	}
-	
+
 	private TestResult runTest(File fileOrDirectory, WeaveRunner weaveRunner) {
 		if (fileOrDirectory.isDirectory()) {
 			return runTestsInDirectory(fileOrDirectory, weaveRunner);
@@ -100,7 +103,7 @@ public class TestRunner {
 				return file.isDirectory() || (file.isFile() && file.getName().endsWith(".dwl"));
 			}
 		});
-		for (File f: files) {
+		for (File f : files) {
 			TestResult oneResult = runTest(f, weaveRunner);
 			if (isAddableResult(oneResult)) {
 				result.addTest(oneResult);
@@ -120,6 +123,6 @@ public class TestRunner {
 		DataWeaveScript script = weaveRunner.compile(fileOrDirectory, bindings);
 		DataWeaveResult result = weaveRunner.runScript(script, bindings, "application/java");
 		Object content = result.getContent();
-		return new TestResult((Map<String, Object>)content);
+		return new TestResult((Map<String, Object>) content);
 	}
 }
