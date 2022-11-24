@@ -8,6 +8,7 @@
 
 	<name>data-weave-caller</name>
 	<url>http://maven.apache.org</url>
+	<description>Library to call DataWeave from Java and execute DW unit tests.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,6 +57,22 @@
 			<id>sign-artifacts</id>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.4.1</version>
+						<configuration>
+							<!-- <excludePackageNames>de.codecentric.mule.*</excludePackageNames> -->
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
@@ -140,7 +157,7 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>5.7.1</version>
-			<scope>test</scope>
+			<!-- not scope test, as some classes are needed by runner -->
 		</dependency>
 		<dependency>
 			<groupId>org.mule.weave</groupId>

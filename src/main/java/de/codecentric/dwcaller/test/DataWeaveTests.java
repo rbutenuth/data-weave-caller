@@ -1,6 +1,6 @@
 package de.codecentric.dwcaller.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ import de.codecentric.dwcaller.TestRunner;
  * 
  * Example:
  * <pre>
- * 	@TestFactory
- *  Collection<DynamicNode> dataWeaveTests() throws Exception {
+ * 	&#64;TestFactory
+ *  Collection&lt;DynamicNode&gt; dataWeaveTests() throws Exception {
  *    return all();
  *  }
  *  </pre>
