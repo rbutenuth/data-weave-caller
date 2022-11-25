@@ -20,7 +20,7 @@ First you need some dependencies in your pom.xml:
 	<scope>test</scope>
 </dependency>
 <dependency>
-	<groupId>de.codecentric</groupId>
+	<groupId>de.codecentric.mule.modules</groupId>
 	<artifactId>data-weave-caller</artifactId>
 	<version>1.0.4</version>
 	<scope>test</scope>
