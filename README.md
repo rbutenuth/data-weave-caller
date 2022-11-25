@@ -4,6 +4,36 @@ This project allows to run  [DataWeave](https://dataweave.mulesoft.com/) code fr
 
 You can find the documentation for DataWeave unit tests at MuleSoft: [DataWeave testing framework](https://beta.docs.mulesoft.com/beta-dataweave/dataweave/2.4/dataweave-testing-framework). There is additional documentation for the available [DataWeave asserts]((https://docs.mulesoft.com/munit/2.3/dataweave-assertions-library).
 
+First you need some dependencies in your pom.xml:
+
+```
+<dependency>
+	<groupId>org.junit.jupiter</groupId>
+	<artifactId>junit-jupiter-api</artifactId>
+	<version>5.7.1</version>
+	<scope>test</scope>
+</dependency>
+<dependency>
+	<groupId>org.junit.jupiter</groupId>
+	<artifactId>junit-jupiter-engine</artifactId>
+	<version>5.7.1</version>
+	<scope>test</scope>
+</dependency>
+<dependency>
+	<groupId>de.codecentric</groupId>
+	<artifactId>data-weave-caller</artifactId>
+	<version>1.0.4</version>
+	<scope>test</scope>
+</dependency>
+<!-- Otherwise 2.2.0 is added, which does not support everything needed for tests -->
+<dependency>
+	<groupId>org.mule.weave</groupId>
+	<artifactId>wlang</artifactId>
+	<version>2.4.0-20220824</version>
+	<scope>test</scope>
+</dependency>
+```
+
 To run your tests, you need a small Java adapter class:
 ```
 package de.codecentric.dataweave;
