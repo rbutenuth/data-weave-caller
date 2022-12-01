@@ -104,7 +104,11 @@ To execute the tests, run the class `CallDataWeaveTests` with the test runner of
 
 ## Release notes
 
-### Release 1.0.4 (2022-11-24)
+### Release 1.0.5 (2022-12-01)
 
+- Adding dwtestResources property when not set, points to src/test/resources
+- Adding src/test/dw to folders which will by synchronized into target
+
+### Release 1.0.4 (2022-11-24)
 
 Initial release
