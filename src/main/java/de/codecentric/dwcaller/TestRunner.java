@@ -37,15 +37,21 @@ public class TestRunner {
 	 * @throws IOException
 	 */
 	public static TestResult run(String[] args) throws IOException {
-		File srcMain = new File("src/main/resources");
-		File srcTest = new File("src/test/resources");
+		File srcMainResources = new File("src/main/resources");
+		File srcTestResources = new File("src/test/resources");
+		File srcTestDw = new File("src/test/dw");
 		File target = new File("target/classes");
+		String dwtestResources = System.getProperty("dwtestResources");
+		if (dwtestResources == null) {
+			System.setProperty("dwtestResources", srcTestResources.getAbsolutePath());
+		}
 		SynchronizeUtil syncher = new SynchronizeUtil();
 		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.class"));
 		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.xml"));
 		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.dwl"));
-		syncher.syncFileOrDirectory(srcMain, target);
-		syncher.syncFileOrDirectory(srcTest, target);
+		syncher.syncFileOrDirectory(srcMainResources, target);
+		syncher.syncFileOrDirectory(srcTestResources, target);
+		syncher.syncFileOrDirectory(srcTestDw, target);
 		syncher.deleteUnexpectedNodes(target);
 
 		TestRunner runner = new TestRunner(args);

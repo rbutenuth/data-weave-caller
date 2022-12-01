@@ -52,26 +52,25 @@ public class WeaveRunnerBuilder {
 		ignorePatterns.add(pattern);
 		return this;
 	}
-	
+
 	public WeaveRunnerBuilder withPathDir(File dir) {
 		pathElements.add(dir);
 		return this;
 	}
 
-
 	public WeaveRunnerBuilder withClassPath() {
 		addClassPath = true;
 		return this;
 	}
-	
+
 	public WeaveRunner build() {
 		if (addClassPath) {
 			addJarsToClassPath();
 		}
 		PathBasedResourceResolver resourceResolver = new PathBasedResourceResolver(pathElements);
 		ModuleComponentsFactory moduleComponentFactory = SimpleModuleComponentFactory.apply(resourceResolver);
-		scriptingEngine = new DataWeaveScriptingEngine(moduleComponentFactory,
-				ParserConfiguration.apply(new MutableList<>(), new MutableList<>()));
+		scriptingEngine = new DataWeaveScriptingEngine(moduleComponentFactory, ParserConfiguration.apply(new MutableList<>(), new MutableList<>()));
+
 		SimpleLoggingService logger = new SimpleLoggingService();
 		for (Pattern p : ignorePatterns) {
 			logger.addIgnorePattern(p);
@@ -109,8 +108,7 @@ public class WeaveRunnerBuilder {
 		handlers.appendElem(new WeavePathProtocolHandler(pathBasedResourceResolver));
 		ProtocolUrlSourceProviderResolverService service = new ProtocolUrlSourceProviderResolverService(handlers);
 		customServices.$plus(new Tuple2(UrlSourceProviderResolverService.class, service));
-		customServices.$plus(
-				new Tuple2(WorkingDirectoryService.class, new CustomWorkingDirectoryService(directoryFunction, true)));
+		customServices.$plus(new Tuple2(WorkingDirectoryService.class, new CustomWorkingDirectoryService(directoryFunction, true)));
 		customServices.$plus(new Tuple2(CharsetProviderService.class, createCharsetProvider()));
 
 		return ServiceManager.apply(logger, customServices);
@@ -160,15 +158,13 @@ public class WeaveRunnerBuilder {
 		}
 
 		@Override
-		public DataWeaveResult runScript(DataWeaveScript script, ScriptingBindings bindings,
-				String defaultOutputMimeType) {
+		public DataWeaveResult runScript(DataWeaveScript script, ScriptingBindings bindings, String defaultOutputMimeType) {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			return runScript(script, bindings, defaultOutputMimeType, bos);
 		}
 
 		@Override
-		public DataWeaveResult runScript(DataWeaveScript script, ScriptingBindings bindings,
-				String defaultOutputMimeType, OutputStream bos) {
+		public DataWeaveResult runScript(DataWeaveScript script, ScriptingBindings bindings, String defaultOutputMimeType, OutputStream bos) {
 			Option<Object> out = Option.apply(bos);
 			return script.write(bindings, serviceManager, "application/java", out);
 		}

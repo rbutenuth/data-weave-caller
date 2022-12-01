@@ -1,6 +1,6 @@
 package de.codecentric.dwcaller.test;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public abstract class DataWeaveTests {
 	 * @throws IOException From DataWeave
 	 */
 	protected Collection<DynamicNode> all() throws IOException {
-		return some(new String[0]);
+		return some();
 	}
 
 	/**
