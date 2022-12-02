@@ -3,9 +3,11 @@ package de.codecentric.dwcaller;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.mule.weave.v2.runtime.BindingValue;
 import org.mule.weave.v2.runtime.DataWeaveResult;
 import org.mule.weave.v2.runtime.DataWeaveScript;
 import org.mule.weave.v2.runtime.ScriptingBindings;
@@ -126,9 +128,19 @@ public class TestRunner {
 	@SuppressWarnings("unchecked")
 	private TestResult runTestsInFile(File fileOrDirectory, WeaveRunner weaveRunner) {
 		ScriptingBindings bindings = new ScriptingBindings();
+		addPredefinedBindings(bindings);
 		DataWeaveScript script = weaveRunner.compile(fileOrDirectory, bindings);
 		DataWeaveResult result = weaveRunner.runScript(script, bindings, "application/java");
 		Object content = result.getContent();
 		return new TestResult((Map<String, Object>) content);
+	}
+
+	private void addPredefinedBindings(ScriptingBindings bindings) {
+		// see https://docs.mulesoft.com/dataweave/2.4/dataweave-variables-context for the source of this list
+		String[] predefined = { "app", "attributes", "authentication", "correlationId", "flow", "message", "mule",
+				"payload", "server", "vars" };
+		for (String p : predefined) {
+			bindings.addBinding(p, BindingValue.apply(Collections.emptyMap(), "application/java"));
+		}
 	}
 }

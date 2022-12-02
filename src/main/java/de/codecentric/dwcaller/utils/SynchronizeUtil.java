@@ -39,7 +39,7 @@ public class SynchronizeUtil {
 		} else if (sourceNode.isFile()) {
 			syncFile(sourceNode, destNode);
 		} else {
-			throw new IOException("Don't know how to sync " + sourceNode);
+			// ignore
 		}
 	}
 

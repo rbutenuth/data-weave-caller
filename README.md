@@ -104,7 +104,12 @@ To execute the tests, run the class `CallDataWeaveTests` with the test runner of
 
 ## Release notes
 
-### Release 1.0.5 (2022-12-01)
+### Release 1.0.6 (2022-12-02)
+
+- Ignore non existing directors in synchronize (instead of throwing Exception)
+- Add root objects, so access to vars etc. does not create compile error
+
+- ### Release 1.0.5 (2022-12-01)
 
 - Adding dwtestResources property when not set, points to src/test/resources
 - Adding src/test/dw to folders which will by synchronized into target
