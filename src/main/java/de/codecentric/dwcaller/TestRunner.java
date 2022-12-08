@@ -13,6 +13,7 @@ import org.mule.weave.v2.runtime.DataWeaveScript;
 import org.mule.weave.v2.runtime.ScriptingBindings;
 
 import de.codecentric.dwcaller.test.TestResult;
+import de.codecentric.dwcaller.test.TestStatus;
 import de.codecentric.dwcaller.test.TextReporter;
 import de.codecentric.dwcaller.utils.SynchronizeUtil;
 import de.codecentric.dwcaller.utils.WeaveRunner;
@@ -98,8 +99,8 @@ public class TestRunner {
 		} else if (fileOrDirectory.isFile()) {
 			return runTestsInFile(fileOrDirectory, weaveRunner);
 		} else {
-			System.err.println("Don't know what to do with " + fileOrDirectory);
-			return null;
+			TestResult test = new TestResult(fileOrDirectory.getName(), TestStatus.ERROR, "Neither File nor directory: " + fileOrDirectory);
+			return test;
 		}
 	}
 
@@ -137,8 +138,7 @@ public class TestRunner {
 
 	private void addPredefinedBindings(ScriptingBindings bindings) {
 		// see https://docs.mulesoft.com/dataweave/2.4/dataweave-variables-context for the source of this list
-		String[] predefined = { "app", "attributes", "authentication", "correlationId", "flow", "message", "mule",
-				"payload", "server", "vars" };
+		String[] predefined = { "app", "attributes", "authentication", "correlationId", "flow", "message", "mule", "payload", "server", "vars" };
 		for (String p : predefined) {
 			bindings.addBinding(p, BindingValue.apply(Collections.emptyMap(), "application/java"));
 		}
