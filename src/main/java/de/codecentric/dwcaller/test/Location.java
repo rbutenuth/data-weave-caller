@@ -6,10 +6,15 @@ import java.util.Map;
  * Location within a script.
  */
 public class Location {
+	public static final Location UNKNOWN = new Location();
 	private int index;
 	private int line;
 	private int column;
-	
+
+	private Location() {
+		// only for UNKNOWN
+	}
+
 	public Location(Map<String, Object> data) {
 		index = nullToMinusOone(data.get("index"));
 		line = nullToMinusOone(data.get("line"));
@@ -18,7 +23,7 @@ public class Location {
 
 	private int nullToMinusOone(Object object) {
 		if (object instanceof Number) {
-			return ((Number)object).intValue() + 1;
+			return ((Number) object).intValue() + 1;
 		}
 		return -1;
 	}

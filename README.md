@@ -104,9 +104,9 @@ To execute the tests, run the class `CallDataWeaveTests` with the test runner of
 
 ## Release notes
 
-### Release 1.0.7 (2022-12-06)
+### Release 1.0.8 (2022-12-06)
 
-- Just because 1.0.6 did not arrive on Maven Central. 
+- Some versions did not arrive on Maven Central. 
 
 ### Release 1.0.6 (2022-12-02)
 

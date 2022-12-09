@@ -21,11 +21,20 @@ public class TestResult {
 	public TestResult() {
 		tests = new ArrayList<>();
 		name = "";
+		sourceIdentifier = "";
+		start = Location.UNKNOWN;
+		end = Location.UNKNOWN;
 	}
 
 	public TestResult(String name) {
 		this();
 		this.name = name;
+	}
+
+	public TestResult(String name, TestStatus status, String errorMessage) {
+		this(name);
+		this.status = status;
+		this.errorMessage = errorMessage;
 	}
 
 	/**
