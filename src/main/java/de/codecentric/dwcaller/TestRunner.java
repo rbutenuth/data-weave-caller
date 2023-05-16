@@ -43,19 +43,22 @@ public class TestRunner {
 		File srcMainResources = new File("src/main/resources");
 		File srcTestResources = new File("src/test/resources");
 		File srcTestDw = new File("src/test/dw");
-		File target = new File("target/classes");
+		File targetSrc = new File("target/classes");
+		File targetTest = new File("target/test-classes");
 		String dwtestResources = System.getProperty("dwtestResources");
 		if (dwtestResources == null) {
 			System.setProperty("dwtestResources", srcTestResources.getAbsolutePath());
 		}
+
 		SynchronizeUtil syncher = new SynchronizeUtil();
 		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.class"));
 		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.xml"));
 		syncher.addToDoNotDeletePatterns(Pattern.compile(".*\\.dwl"));
-		syncher.syncFileOrDirectory(srcMainResources, target);
-		syncher.syncFileOrDirectory(srcTestResources, target);
-		syncher.syncFileOrDirectory(srcTestDw, target);
-		syncher.deleteUnexpectedNodes(target);
+		syncher.syncFileOrDirectory(srcMainResources, targetSrc);
+		syncher.syncFileOrDirectory(srcTestResources, targetTest);
+		syncher.syncFileOrDirectory(srcTestDw, targetTest);
+		syncher.deleteUnexpectedNodes(targetTest);
+		syncher.deleteUnexpectedNodes(targetSrc);
 
 		TestRunner runner = new TestRunner(args);
 		TestResult result = runner.runTests();
