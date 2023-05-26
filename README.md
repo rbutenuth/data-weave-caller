@@ -22,14 +22,14 @@ First you need some dependencies in your pom.xml:
 <dependency>
 	<groupId>de.codecentric.mule.modules</groupId>
 	<artifactId>data-weave-caller</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.9</version>
 	<scope>test</scope>
 </dependency>
 <!-- Otherwise 2.2.0 is added, which does not support everything needed for tests -->
 <dependency>
 	<groupId>org.mule.weave</groupId>
 	<artifactId>wlang</artifactId>
-	<version>2.4.0-20220824</version>
+	<version>2.6.0-20230426</version>
 	<scope>test</scope>
 </dependency>
 ```
