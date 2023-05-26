@@ -2,7 +2,6 @@ package de.codecentric.dwcaller.utils;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 import org.mule.weave.v2.model.service.ReadFunctionProtocolHandler;
 import org.mule.weave.v2.module.reader.SourceProvider;
