@@ -22,7 +22,7 @@ First you need some dependencies in your pom.xml:
 <dependency>
 	<groupId>de.codecentric.mule.modules</groupId>
 	<artifactId>data-weave-caller</artifactId>
-	<version>1.0.9</version>
+	<version>1.0.8</version>
 	<scope>test</scope>
 </dependency>
 <!-- Otherwise 2.2.0 is added, which does not support everything needed for tests -->
@@ -104,7 +104,7 @@ To execute the tests, run the class `CallDataWeaveTests` with the test runner of
 
 ## Release notes
 
-### Release 1.0.9/1.0.10 (2023-05-26)
+### In Progress: Release 1.0.9/1.0.9
 
 - Version updates
 - Resolved classpath issues (separation of classes and test classes) 
