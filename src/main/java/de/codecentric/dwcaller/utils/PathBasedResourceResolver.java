@@ -121,6 +121,7 @@ public class PathBasedResourceResolver implements WeaveResourceResolver {
 		@Override
 		public Option<InputStream> resolve(NameIdentifier ni) {
 			try {
+				@SuppressWarnings("resource")
 				ZipFile zipFile = new ZipFile(jarFile);
 				String path = NameIdentifierHelper.toWeaveFilePath(ni, "/"); // Use Unix based system
 				String zipEntry;
