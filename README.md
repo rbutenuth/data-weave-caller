@@ -25,13 +25,6 @@ First you need some dependencies in your pom.xml:
 	<version>1.0.8</version>
 	<scope>test</scope>
 </dependency>
-<!-- Otherwise 2.2.0 is added, which does not support everything needed for tests -->
-<dependency>
-	<groupId>org.mule.weave</groupId>
-	<artifactId>wlang</artifactId>
-	<version>2.6.0-20230426</version>
-	<scope>test</scope>
-</dependency>
 ```
 
 To run your tests, you need a small Java adapter class:
