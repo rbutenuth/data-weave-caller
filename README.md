@@ -104,7 +104,7 @@ To execute the tests, run the class `CallDataWeaveTests` with the test runner of
 
 ## Release notes
 
-### In Progress: Release 1.0.9
+### Release 1.0.9 (2023-06-13)
 
 - Version updates
 - Resolved classpath issues (separation of classes and test classes) 
