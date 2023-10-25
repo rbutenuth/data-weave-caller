@@ -14,6 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<data.weave.version>2.6.0-20230609</data.weave.version>
 		<data.weave.testing.framework.version>1.2.1</data.weave.testing.framework.version>
+		<junit.jupyter.version>5.10.0</junit.jupyter.version>
 	</properties>
 
 	<developers>
@@ -111,7 +112,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.1.2</version>
+				<version>3.2.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -167,13 +168,13 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.9.3</version>
+			<version>${junit.jupyter.version}</version>
 			<!-- not scope test, as some classes are needed by runner -->
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.9.3</version>
+			<version>${junit.jupyter.version}</version>
 			<!-- not scope test, as some classes are needed by runner -->
 		</dependency>
 		<dependency>
