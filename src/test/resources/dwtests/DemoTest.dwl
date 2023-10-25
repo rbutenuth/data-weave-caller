@@ -9,5 +9,5 @@ import dwmodules::DemoModule
 	"result should be object" in do {
 		DemoModule::main({ payload: "", vars: { b: "bar" } })
 	    must equalTo({ message: "Hello world!", payload: "", variables: { b: "bar" } })
-	},
+	}
 ]
