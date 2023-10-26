@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<data.weave.version>2.6.0-20230609</data.weave.version>
+		<data.weave.version>2.4.0-20230918</data.weave.version>
 		<data.weave.testing.framework.version>1.2.1</data.weave.testing.framework.version>
 		<junit.jupyter.version>5.10.0</junit.jupyter.version>
 	</properties>
