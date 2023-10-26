@@ -97,6 +97,14 @@ To execute the tests, run the class `CallDataWeaveTests` with the test runner of
 
 ## Release notes
 
+### Release 1.1.0 (2023-10-27)
+
+- Build with versions matching Mule 4.5
+
+### Release 1.0.11 (2023-10-27)
+
+- Build with versions matching Mule 4.4
+
 ### Release 1.0.10 (2023-10-26)
 
 - Version updates
