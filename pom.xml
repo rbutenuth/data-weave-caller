@@ -197,5 +197,10 @@
 			<artifactId>data-weave-testing-framework</artifactId>
 			<version>${data.weave.testing.framework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mule.weave</groupId>
+			<artifactId>file-module</artifactId>
+			<version>0.6.4</version>
+		</dependency>
 	</dependencies>
 </project>
