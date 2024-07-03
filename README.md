@@ -22,7 +22,7 @@ First you need some dependencies in your pom.xml:
 <dependency>
 	<groupId>de.codecentric.mule.modules</groupId>
 	<artifactId>data-weave-caller</artifactId>
-	<version>1.0.8</version>
+	<version>1.1.1</version>
 	<scope>test</scope>
 </dependency>
 ```
@@ -96,6 +96,10 @@ The referenced sample data in `src/test/resources/sample_data`
 To execute the tests, run the class `CallDataWeaveTests` with the test runner of your choice (e.g. in your IDE).
 
 ## Release notes
+
+### Release 1.1.1 (2024-07-04)
+
+- Build with Data Weave libraries 2.6.0 (instead of snapshot)
 
 ### Release 1.1.0 (2023-10-27)
 
