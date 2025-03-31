@@ -12,8 +12,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<data.weave.version>2.6.0</data.weave.version>
-		<data.weave.testing.framework.version>1.4.0-rc1</data.weave.testing.framework.version>
+		<data.weave.version>2.9.0</data.weave.version>
+		<data.weave.testing.framework.version>2.9.0</data.weave.testing.framework.version>
 		<junit.jupyter.version>5.10.0</junit.jupyter.version>
 	</properties>
 
