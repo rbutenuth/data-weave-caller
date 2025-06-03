@@ -23,7 +23,7 @@ import org.mule.weave.v2.runtime.DataWeaveScript;
 import org.mule.weave.v2.runtime.DataWeaveScriptingEngine;
 import org.mule.weave.v2.runtime.InputType;
 import org.mule.weave.v2.runtime.ModuleComponentsFactory;
-import org.mule.weave.v2.runtime.ParserConfiguration;
+import org.mule.weave.v2.runtime.ParserConfigurationBuilder;
 import org.mule.weave.v2.runtime.ScriptingBindings;
 import org.mule.weave.v2.runtime.SimpleModuleComponentFactory;
 
@@ -69,7 +69,7 @@ public class WeaveRunnerBuilder {
 		}
 		PathBasedResourceResolver resourceResolver = new PathBasedResourceResolver(pathElements);
 		ModuleComponentsFactory moduleComponentFactory = SimpleModuleComponentFactory.apply(resourceResolver);
-		scriptingEngine = new DataWeaveScriptingEngine(moduleComponentFactory, ParserConfiguration.apply(new MutableList<>(), new MutableList<>()));
+		scriptingEngine = new DataWeaveScriptingEngine(moduleComponentFactory, new ParserConfigurationBuilder().build());
 
 		SimpleLoggingService logger = new SimpleLoggingService();
 		for (Pattern p : ignorePatterns) {
